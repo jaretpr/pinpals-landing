@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>PinPals - Connect on the Course</title>
+    <meta name="description" content="PinPals is a golf-matching app that helps you find golfers nearby who match your skill level, schedule, and style of play."/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Google Fonts - Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    
+    <!-- Material Symbols Outlined -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        body {
+            min-height: 100vh;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Notification animation */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .notification-enter {
+            animation: slideDown 0.3s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-background-dark font-display">
+    <!-- Auth Notification Banner (Hidden by default, shown by JS when needed) -->
+    <div id="auth-notification" class="hidden fixed top-0 left-0 right-0 z-50 notification-enter">
+        <div class="max-w-2xl mx-auto m-4">
+            <div id="notification-content" class="rounded-2xl shadow-lg p-4 flex items-start justify-between">
+                <div class="flex items-start gap-3 flex-1">
+                    <span id="notification-icon" class="material-symbols-outlined text-2xl"></span>
+                    <p id="notification-message" class="text-sm font-medium flex-1"></p>
+                </div>
+                <button onclick="dismissNotification()" class="ml-4 text-current opacity-70 hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative min-h-screen w-full bg-background-dark">
+        <!-- Hero Section with Background -->
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <!-- Background Image with Gradient Overlay -->
+            <div class="absolute inset-0 z-0">
+                <div class="bg-cover bg-center h-full w-full" 
+                     style='background-image: linear-gradient(0deg, rgba(16, 34, 22, 1) 0%, rgba(16, 34, 22, 0.4) 50%, rgba(16, 34, 22, 1) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuB458I4Dwx-YZ5Kdi2RZsyon4yrIP3TgzryGHFJCBNr2DmTUf3aPdf4hJO8OgpoM5nYdcRKvPSgzVqjiIrdAt7Az8oUdBeZEmoA1c4C9OLp-E0SKTgs7i9x9V43pUj-TUtNWka64sjKz3mdZ2yc4NhKGn4EWM1A2A1_cnED9L9S83O4e6VApD5TuP4csBN-ZhAQ19IPSEm-dSq31PnyHlMqOty1xW42PwTh4-uM1Eg5_ySRzC4GHB5j5syDmUU2JGBNmlRcf4W2hBs");'>
+                </div>
+            </div>
+            
+            <!-- Hero Content -->
+            <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-20">
+                <!-- Icon and Logo -->
+                <div class="flex flex-col items-center gap-4 mb-6">
+                    <div class="w-20 h-20 rounded-full bg-primary/20 backdrop-blur-sm border-2 border-primary flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-5xl">golf_course</span>
+                    </div>
+                    <h1 class="text-white text-6xl md:text-7xl lg:text-8xl font-bold leading-tight font-display">
+                        PinPals
+                    </h1>
+                </div>
+                
+                <!-- Tagline -->
+                <p class="text-white text-2xl md:text-3xl font-medium mb-6">
+                    Connect on the course.
+                </p>
+                
+                <!-- Subtext -->
+                <p class="text-[#9db9a6] text-lg md:text-xl max-w-2xl leading-relaxed">
+                    PinPals is a golf-matching app that helps you find golfers nearby who match your skill level, schedule, and style of play.
+                </p>
+            </div>
+        </section>
+
+        <!-- What is PinPals Section -->
+        <section class="relative z-10 bg-gradient-to-b from-background-dark to-[#0d1a11] py-20 px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-white text-4xl md:text-5xl font-bold text-center mb-8">
+                    What is PinPals?
+                </h2>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                    <p class="text-[#c5d9cc] text-lg leading-relaxed mb-4">
+                        PinPals is a <span class="text-primary font-semibold">Tinder-style golf matching app</span> designed to help golfers connect with playing partners who share their passion for the game.
+                    </p>
+                    <p class="text-[#c5d9cc] text-lg leading-relaxed mb-4">
+                        Users create a profile with their <span class="font-semibold text-white">handicap, skill level, preferred tee times, and home courses</span>.
+                    </p>
+                    <p class="text-[#c5d9cc] text-lg leading-relaxed">
+                        They swipe through nearby golfers and <span class="text-primary font-semibold">match with people who want to play</span> at the same level and schedule.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="relative z-10 bg-[#0d1a11] py-20 px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-white text-4xl md:text-5xl font-bold text-center mb-16">
+                    How It Works
+                </h2>
+                
+                <!-- Steps Grid -->
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-primary text-4xl">person_add</span>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold mb-4">
+                            Set up your profile
+                        </h3>
+                        <p class="text-[#9db9a6] leading-relaxed">
+                            Add your handicap, skill level (beginner, intermediate, advanced, competitive), and what you're looking for (9 holes, 18 holes, driving range, casual or competitive).
+                        </p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-primary text-4xl">swipe</span>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold mb-4">
+                            Match with nearby golfers
+                        </h3>
+                        <p class="text-[#9db9a6] leading-relaxed">
+                            See golfers near you based on location and preferences, and swipe to match with people who fit your vibe.
+                        </p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-primary text-4xl">calendar_month</span>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold mb-4">
+                            Plan your round
+                        </h3>
+                        <p class="text-[#9db9a6] leading-relaxed">
+                            Choose from nearby courses, pick 9 or 18 holes, suggest a time, and send an initial message like: <span class="text-primary italic">"Want to play 18 at [Course Name] at [Time]?"</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coming Soon Section -->
+        <section class="relative z-10 bg-gradient-to-b from-[#0d1a11] to-background-dark py-20 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-white text-4xl md:text-5xl font-bold mb-8">
+                    Coming Soon
+                </h2>
+                <p class="text-[#c5d9cc] text-xl leading-relaxed mb-6">
+                    PinPals is currently in development and will be launching soon on iOS.
+                </p>
+                <p class="text-[#9db9a6] text-lg mb-12">
+                    Stay tuned for our App Store release.
+                </p>
+                
+                <!-- App Store Badges (Placeholder) -->
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-8 py-4 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-white text-3xl">shop</span>
+                        <div class="text-left">
+                            <p class="text-[#9db9a6] text-xs">Download on the</p>
+                            <p class="text-white font-bold text-lg">App Store</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-8 py-4 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-white text-3xl">android</span>
+                        <div class="text-left">
+                            <p class="text-[#9db9a6] text-xs">Get it on</p>
+                            <p class="text-white font-bold text-lg">Google Play</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="relative z-10 bg-background-dark py-8 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="text-[#9db9a6] text-sm">
+                    © 2025 PinPals. All rights reserved.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Supabase Auth Redirect Handler -->
+    <script>
+        // Parse URL hash parameters
+        function parseHashParams() {
+            const hash = window.location.hash.substring(1);
+            if (!hash) return null;
+            
+            const params = {};
+            hash.split('&').forEach(param => {
+                const [key, value] = param.split('=');
+                if (key && value) {
+                    params[key] = decodeURIComponent(value);
+                }
+            });
+            
+            return Object.keys(params).length > 0 ? params : null;
+        }
+
+        // Show notification banner
+        function showNotification(type, message, icon) {
+            const notification = document.getElementById('auth-notification');
+            const content = document.getElementById('notification-content');
+            const iconElement = document.getElementById('notification-icon');
+            const messageElement = document.getElementById('notification-message');
+            
+            // Set content
+            iconElement.textContent = icon;
+            messageElement.textContent = message;
+            
+            // Set colors based on type
+            if (type === 'success') {
+                content.className = 'rounded-2xl shadow-lg p-4 flex items-start justify-between bg-primary/20 border-2 border-primary text-primary backdrop-blur-sm';
+            } else if (type === 'error') {
+                content.className = 'rounded-2xl shadow-lg p-4 flex items-start justify-between bg-red-500/20 border-2 border-red-500 text-red-400 backdrop-blur-sm';
+            } else {
+                content.className = 'rounded-2xl shadow-lg p-4 flex items-start justify-between bg-blue-500/20 border-2 border-blue-500 text-blue-400 backdrop-blur-sm';
+            }
+            
+            // Show notification
+            notification.classList.remove('hidden');
+        }
+
+        // Dismiss notification
+        function dismissNotification() {
+            const notification = document.getElementById('auth-notification');
+            notification.classList.add('hidden');
+            
+            // Clear hash from URL without reloading
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState(null, '', window.location.pathname);
+            }
+        }
+
+        // Handle auth redirect on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = parseHashParams();
+            
+            if (!params) return;
+            
+            const { type, access_token, error_description } = params;
+            
+            // Handle error cases
+            if (error_description) {
+                showNotification(
+                    'error',
+                    `Something went wrong: ${error_description.replace(/\+/g, ' ')}`,
+                    'error'
+                );
+                return;
+            }
+            
+            // Handle success cases based on type
+            if (type === 'signup' || type === 'invite') {
+                showNotification(
+                    'success',
+                    'Your email has been confirmed. You can now return to the PinPals app.',
+                    'check_circle'
+                );
+            } else if (type === 'recovery' || type === 'email_change') {
+                showNotification(
+                    'info',
+                    'Your request has been processed. You can safely close this page and go back to the PinPals app.',
+                    'info'
+                );
+            } else if (type === 'magiclink') {
+                showNotification(
+                    'success',
+                    'Sign in successful. You can now return to the PinPals app.',
+                    'check_circle'
+                );
+            } else if (access_token) {
+                // Generic success for any other type with access token
+                showNotification(
+                    'success',
+                    'Authentication successful. You can now return to the PinPals app.',
+                    'check_circle'
+                );
+            }
+        });
+    </script>
+</body>
+</html>
