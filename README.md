@@ -1,2 +1,7 @@
-# pinpals-landing
-A simple hosted landing page for the PinPals mobile app. This page is used as the Supabase authentication redirect URL and marketing “coming soon” screen. Built as a single-page static site with Tailwind CSS, responsive design, basic hash-parsing for Supabase redirect feedback, and lightweight marketing text. No login logic or forms included.
+# **PinPals**
+
+PinPals is a modern golf-matching app designed to help golfers connect more easily. Users can create a profile, see golfers nearby, match based on skill level and availability, and coordinate rounds at local courses. The app makes it simple to find partners for 9 holes, 18 holes, competitive play, or casual practice.
+
+This repo contains a simple landing page for the project.
+
+---
